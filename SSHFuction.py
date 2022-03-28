@@ -1,5 +1,7 @@
 import paramiko
+from paramiko import sftp_client
 from OtherFuc import UseFulFuc
+import time
 
 class SSHClass:
     def __init__(self, server,user,pw):
@@ -7,10 +9,12 @@ class SSHClass:
         self.ssh = paramiko.SSHClient()
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         self.ssh.connect(server, username=user, password=pw, timeout=1)
+
         print('登入成功')
 
     def CmdMode(self):
         print('已進入命令模式,離開輸入qq')
+
         while(1):
             cmd=input('(CmdMode):')
             if cmd=='qq':
@@ -68,10 +72,21 @@ class SSHClass:
                         break
     def InitTimeProcess(self,InitTimeAction):
         TargetInitTime=UseFulFuc.InitTimeActionFuc(InitTimeAction)
+        self.ssh.exec_command('sudo killall Mitac_BV')
         self.ssh.exec_command('sudo date {}'.format(TargetInitTime).encode())
         self.ssh.exec_command('sudo hwclock --systohc'.encode())#同步到硬體時間
+
+
+    def CheckOnline(self):
+        stdin, stdout, stderr = self.ssh.exec_command('cat ./bv/EventOnlineInfo.txt')
+        result = stdout.readlines()
+        for data in range(len(result)):
+            print(result[data])
+        print('總筆數:',len(result))
+
+
 
 if __name__ == '__main__':
     SSH=SSHClass('10.42.0.51','pi','mitac2019pi')
     #SSH.CmdMode()
-    SSH.InitTimeProcess('3')
+    SSH.CheckOnline()

@@ -29,7 +29,7 @@ if __name__ == '__main__':
         print("2.清除資料")
         print("3.時間變更")
         print("4.時間初始化")
-        print("5.指令模式")
+        print("5.即時傳輸")
         print("99.離開")
         Cmd=input('請輸入要執行的功能:\n')
 
@@ -65,7 +65,7 @@ if __name__ == '__main__':
             else:
                 print("指令錯誤!!!")
         elif Cmd == '5':
-            SSH.CmdMode()
+            SSH.CheckOnline()
 
         elif Cmd == '99':
             break
