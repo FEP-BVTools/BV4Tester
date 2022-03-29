@@ -1,7 +1,7 @@
 import paramiko
-from paramiko import sftp_client
+
 from OtherFuc import UseFulFuc
-import time
+
 
 class SSHClass:
     def __init__(self, server,user,pw):
@@ -84,7 +84,8 @@ class SSHClass:
             print(result[data])
         print('總筆數:',len(result))
 
-
+    def ReaderPowerOff(self):
+        self.ssh.exec_command('echo 0 >/sys/class/gpio/gpio16/value')
 
 if __name__ == '__main__':
     SSH=SSHClass('10.42.0.51','pi','mitac2019pi')
