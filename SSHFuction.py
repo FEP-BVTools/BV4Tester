@@ -32,6 +32,7 @@ class SSHClass:
             try:
                 if TimeType == 'H' or TimeType == 'm':
                     print("時間變更量:", ChangeTimeAction)
+                    #取得機台時間
                     stdin, stdout, stderr =self.ssh.exec_command('date "+%Y:%m:%d:%H:%M:%S"\r\n'.encode())
                     Bvdate = stdout.readline()  # 替代為時間
                     print('NowTime:'+Bvdate)
@@ -87,7 +88,16 @@ class SSHClass:
     def ReaderPowerOff(self):
         self.ssh.exec_command('echo 0 >/sys/class/gpio/gpio16/value')
 
+    def ActiveMainProcess(self):
+        self.ssh.exec_command('cd /bv')
+        self.ssh.exec_command('sudo Mitac_BV&')
+
+    def InitAdmin(self):
+        self.ssh.exec_command('sudo chown -R pi:pi bv')         #將BV擁有者變更為pi
+        self.ssh.exec_command('sudo chmod -R 777 Inbox')        #將檔案變更讀寫權限
+
+
 if __name__ == '__main__':
     SSH=SSHClass('10.42.0.51','pi','mitac2019pi')
     #SSH.CmdMode()
-    SSH.CheckOnline()
+    SSH.ActiveMainProcess()

@@ -15,7 +15,7 @@ if __name__ == '__main__':
     Cmd=0
 
     # 取得初始化參數
-    BVIP=UseFulFuc.GetInitParameter('InitFile.ini')
+    BVIP=UseFulFuc.GetInitParameter('InitFile.ini',0)
     UseFulFuc.Ctrlprint('BVIP:'+BVIP, DebugSw)
     #登入BV4
     SSH=SSHClass(BVIP,username,password)
@@ -30,10 +30,11 @@ if __name__ == '__main__':
         print("4.時間初始化")
         print("5.即時傳輸資料")
         print("6.讀卡機電源關閉")
-        print("98.重新連線")
+        print("97.重設IP")
+        print("98.以目前IP重新連線")
         print("99.離開")
         Cmd=input('請輸入要執行的功能:\n')
-
+        print('------------------------------------------')
         try:
             if Cmd == '1':
                 print("開始取得資料...")
@@ -61,7 +62,8 @@ if __name__ == '__main__':
                 print("1.設為現在時間(UTC)")
                 print("2.設為早上00點(UTC)")
                 print("3.設為現在時間(UTC+8)")
-                InitTimeAction = input('請輸入執行項目')
+                InitTimeAction = input('請輸入執行項目\n')
+                print('------------------------------------------')
                 if InitTimeAction == '1' or InitTimeAction == '2' or InitTimeAction == '3':
                     SSH.InitTimeProcess(InitTimeAction)
                 else:
@@ -70,8 +72,14 @@ if __name__ == '__main__':
                 SSH.CheckOnline()
             elif Cmd == '6':
                 SSH.ReaderPowerOff()
-
-            elif Cmd=='98':
+            elif Cmd == '7':
+                SSH.ReaderPowerOff()
+            elif Cmd == '97':
+                print("目前設定IP:{}\n".format(BVIP))
+                BVIP = UseFulFuc.GetInitParameter('InitFile.ini', 1)
+                SSH = SSHClass(BVIP, username, password)
+            elif Cmd == '98':
+                print("目前設定IP:{}\n".format(BVIP))
                 SSH = SSHClass(BVIP, username, password)
             elif Cmd == '99':
                 break

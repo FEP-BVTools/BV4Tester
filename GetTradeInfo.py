@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 import time
 
 options = Options()
-options.binary_location = "C:\Program Files (x86)\Google\Chrome Beta\Application\chrome.exe"
+options.binary_location = "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
 driver = webdriver.Chrome(chrome_options = options, executable_path='chromedriver.exe')
 
 

@@ -3,15 +3,15 @@ import time
 from time import gmtime, strftime
 
 class UseFulFuc:
-    def GetInitParameter(InitInfoFileName):
-        if os.path.exists(InitInfoFileName):
+    def GetInitParameter(InitInfoFileName,ResetIP):
+        if os.path.exists(InitInfoFileName) and ResetIP==0:
             IPFile=open(InitInfoFileName)
             IPPosion=IPFile.readline().strip()
         else:
             while(1):
-                IPPosion=input('請輸入IP位置')
+                IPPosion=input('請輸入IP位置:')
                 if IPPosion!='':
-                    f=open(InitInfoFileName,mode='a+')
+                    f=open(InitInfoFileName,mode='w+')
                     f.write(IPPosion)
                     break
                 else:

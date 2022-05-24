@@ -1,10 +1,9 @@
 from __future__ import print_function
+
 import ftplib
 import os
 from os import listdir
 from os.path import isfile, isdir
-
-
 
 
 class myFtp:
